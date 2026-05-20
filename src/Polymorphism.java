@@ -7,13 +7,13 @@ public class Polymorphism {
      * @return the role of the person
      */
     public static String getStudentRole(Person p) {
-        // TODO: right now for student, it is not returning the role to be student.
-        return p.role;
-    } // hi test test TASK_1 BRANCH CODE... SHOULD SEE THIS IN MAIN!!!
+        // Calling the method allows Java to dynamically look up the correct subclass implementation
+        return p.getRole();
+    }
 }
-// test change
+
 class Person {
-    public final String role = "General";
+    private final String role = "General";
     private final String name;
 
     public Person(String name) {
@@ -23,14 +23,25 @@ class Person {
     public String getName() {
         return this.name;
     }
+
+    // Added a getter method so subclasses can override it polymorphically
+    public String getRole() {
+        return this.role;
+    }
 }
 
 class Student extends Person {
-    public final String role = "Student";
+    private final String role = "Student"; // Changed from "General" to "Student"
     private final String studentId;
 
     public Student(String name, String studentId) {
         super(name);
         this.studentId = studentId;
+    }
+
+    // Overriding the getRole method to return the Student's role
+    @Override
+    public String getRole() {
+        return this.role;
     }
 }
