@@ -7,11 +7,66 @@ public class Polymorphism {
      * @return the role of the person
      */
     public static String getStudentRole(Person p) {
-        // TODO: right now for student, it is not returning the role to be student.
-        return p.role;
-    } // hi test test TASK_1 BRANCH CODE... SHOULD SEE THIS IN MAIN!!!
+        // Calling the method allows Java to dynamically look up the correct subclass implementation
+        return p.getRole();
+    }
 }
-// test change
+
+class Person {
+    private final String role = "General";
+    private final String name;
+
+    public Person(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    // Added a getter method so subclasses can override it polymorphically
+    public String getRole() {
+        return this.role;
+    }
+}
+
+class Student extends Person {
+    private final String role = "Student"; // Changed from "General" to "Student"
+    private final String studentId;
+
+    public Student(String name, String studentId) {
+        super(name);
+        this.studentId = studentId;
+    }
+
+    // Overriding the getRole method to return the Student's role
+    @Override
+    public String getRole() {
+        return this.role;
+    }
+}
+
+public class Polymorphism {
+    // TODO TASK 1: Fix the bugs in this code to pass PolymorphismTest.java
+
+    /**
+     * Returns the role.
+     * @param p the person whose role is to be returned
+     * @return the role of the person
+     */
+public static String getStudentRole(Person p) {
+    // 1. Check if the Person object is actually an instance of Student
+    if (p instanceof Student) {
+        // 2. Cast p to a Student so we can access Student's specific fields
+        Student s = (Student) p;
+        return s.role;
+    }
+
+    // Fallback for a regular Person
+    return p.role;
+}
+}
+
 class Person {
     public final String role = "General";
     private final String name;
@@ -26,6 +81,7 @@ class Person {
 }
 
 class Student extends Person {
+    // 3. FIX: Changed "General" to "Student" so it actually returns the right role!
     public final String role = "Student";
     private final String studentId;
 
@@ -34,3 +90,4 @@ class Student extends Person {
         this.studentId = studentId;
     }
 }
+
